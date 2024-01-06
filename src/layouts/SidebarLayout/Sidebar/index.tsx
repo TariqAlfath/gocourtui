@@ -74,7 +74,7 @@ function Sidebar() {
                   marginTop: '8px'
                 }}
               >
-                Go Court
+                Go Court!
               </label>
               {/* <Logo /> */}
             </Box>
