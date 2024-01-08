@@ -1,4 +1,4 @@
-import { Card, CardHeader, Divider } from '@mui/material';
+import { Card, CardHeader, Divider, Grid, TextField } from '@mui/material';
 import { set, subDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import {
   MResGetRevenueEachMonth
 } from 'src/models/Report/Report';
 import { BarChart } from '@mui/x-charts/BarChart';
+import DatePicker from '@mui/lab/DatePicker';
 
 function MonthlyRevenue(state) {
   const currentYear = new Date().getFullYear();
@@ -27,6 +28,7 @@ function MonthlyRevenue(state) {
   const [dataset, setDataset] = useState<any[]>([]);
   const [labels, setLabels] = useState<any[]>([]);
   const [dataKey, setDataKey] = useState<number[]>([0]);
+  const [monthOrder, setMonthOrder] = useState<Date>(new Date());
 
   const { fetchTrigger, setFetchTrigger } = state;
 
@@ -35,11 +37,14 @@ function MonthlyRevenue(state) {
     // alert(JSON.stringify(dataKey));
   }, [fetchTrigger]);
 
+  useEffect(() => {
+    fetchOrders();
+  }, [monthOrder]);
+
   const fetchOrders = async () => {
     try {
       var response = await new MResGetRevenueEachMonth().GetRevenueEachMonth(
-        stDate,
-        enDate
+        monthOrder
       );
 
       // alert(JSON.stringify(response));
@@ -58,6 +63,22 @@ function MonthlyRevenue(state) {
   return (
     <Card sx={{ padding: 2 }}>
       <CardHeader title="Revenue Every Month" />
+      <Grid sx={{ padding: '16px;' }}>
+        <Grid item xs={12} md={2} lg={2}>
+          <DatePicker
+            label={'Pick Year !'}
+            value={monthOrder}
+            onChange={(newValue) => {
+              setMonthOrder(newValue as Date);
+              // alert(newValue);
+            }}
+            views={['year']}
+            renderInput={(params) => (
+              <TextField {...params} variant="outlined" />
+            )}
+          />
+        </Grid>
+      </Grid>
       <Divider />
       {dataKey && courtOrders.data && (
         <BarChart

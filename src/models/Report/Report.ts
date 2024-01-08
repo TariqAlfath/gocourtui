@@ -93,16 +93,14 @@ export class MResGetRevenueEachMonth {
   }
 
   public async GetRevenueEachMonth(
-    startDate?: Date | null,
-    endDate?: Date | null
+    year?: Date | null
   ): Promise<CustomResultBase<MResGetRevenueEachMonth> | null> {
     try {
       const response = await axios.get<
         CustomResultBase<MResGetRevenueEachMonth>
       >(`${process.env.REACT_APP_API_DOMAIN}api/Report/GetRevenueEachMonth`, {
         params: {
-          stDate: formatDateFromString(startDate),
-          enDate: formatDateFromString(endDate)
+          year: formatDateFromString(year)
         }
       });
 

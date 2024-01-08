@@ -82,7 +82,7 @@ function SummaryOrder() {
     <Card>
       <CardHeader title="Summary Order's" />
       <Grid sx={{ padding: '16px;' }}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={6} lg={6}>
           <DatePicker
             label={'Pick Month !'}
             value={monthOrder}
